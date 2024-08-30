@@ -1,0 +1,18 @@
+server:
+  port: ${PORT}
+
+spring:
+  application:
+    name: config-server
+  config:
+    import: optional:file:.env[.properties]
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configs
+  output:
+    ansi:
+      enabled: ALWAYS
