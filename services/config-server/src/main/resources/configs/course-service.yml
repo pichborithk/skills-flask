@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/skills-flask
-    username: pichborith
+    username: admin
     password: password
 #    driver-class-name: org.postgresql.Driver
   jpa:
