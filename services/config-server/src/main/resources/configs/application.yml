@@ -19,6 +19,8 @@ spring:
     config:
       override-system-properties: false
       import: optional:file:.env[.properties]
+  main:
+    banner-mode: off
   output:
     ansi:
       enabled: ALWAYS
