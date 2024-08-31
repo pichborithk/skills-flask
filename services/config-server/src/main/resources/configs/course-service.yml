@@ -1,0 +1,19 @@
+server:
+  port: 8050
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/skills-flask
+    username: pichborith
+    password: password
+#    driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+      default_schema: public
+#    database: postgresql
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: always
