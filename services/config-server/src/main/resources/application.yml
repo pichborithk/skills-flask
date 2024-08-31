@@ -1,5 +1,5 @@
 server:
-  port: ${PORT}
+  port: 8888
 
 spring:
   application:
@@ -13,6 +13,8 @@ spring:
       server:
         native:
           search-locations: classpath:/configs
+  main:
+    banner-mode: off
   output:
     ansi:
       enabled: ALWAYS
