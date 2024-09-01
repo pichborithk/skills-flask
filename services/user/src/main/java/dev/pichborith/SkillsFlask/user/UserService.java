@@ -12,9 +12,7 @@ public class UserService {
 
 
     public UserResponse create(UserRequest request) {
-        System.out.println(2);
         var user = userRepo.save(userMapper.toUser(request));
-        System.out.println(user);
         return userMapper.toUserResponse(user);
     }
 }
