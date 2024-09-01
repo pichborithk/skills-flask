@@ -1,12 +1,12 @@
 server:
   port: 8090
 
-  spring:
-    data:
-      mongodb:
-        username: admin
-        password: password
-        host: localhost
-        port: 27017
-        database: skills-flask
-        authentication-database: admin
+spring:
+  data:
+    mongodb:
+      username: admin
+      password: password
+      host: localhost
+      port: 27017
+      database: skills-flask
+      authentication-database: admin
