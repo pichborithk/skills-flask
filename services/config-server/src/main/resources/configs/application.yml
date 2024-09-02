@@ -15,10 +15,11 @@ management:
 
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
   cloud:
     config:
       override-system-properties: false
-      import: optional:file:.env[.properties]
   main:
     banner-mode: off
   output:
