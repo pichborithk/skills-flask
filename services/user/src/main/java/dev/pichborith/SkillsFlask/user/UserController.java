@@ -1,24 +1,39 @@
 package dev.pichborith.SkillsFlask.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import dev.pichborith.SkillsFlask.configs.JwtService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("api/users")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final JwtService jwtService;
 
-    @PostMapping()
-    public ResponseEntity<UserResponse> createUser(
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(
         @RequestBody UserRequest request) {
         var user = userService.create(request);
+        String token = jwtService.generateToken(user);
+        return ResponseEntity.ok(new AuthResponse(token));
+
+    }
+
+    @GetMapping
+    public ResponseEntity<UserResponse> getUser() {
+        var user = userService.getCurrentUserDetails();
         return ResponseEntity.ok(user);
 
     }
+
+//    @GetMapping
+//    public ResponseEntity<UserResponse> getUserByEmail(@RequestParam String email) {
+//        var user = userService.getByEmail(email);
+//        return ResponseEntity.ok(user);
+//    }
+
 }
