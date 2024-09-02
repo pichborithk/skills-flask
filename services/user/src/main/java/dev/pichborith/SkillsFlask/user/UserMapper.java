@@ -7,11 +7,11 @@ public class UserMapper {
 
     public UserResponse toUserResponse(User user) {
         return new UserResponse(user.getId(), user.getFirstname(),
-                                user.getLastname(), user.getEmail());
+                                user.getLastname(), user.getEmail(), user.getRole());
     }
 
     public User toUser(UserRequest request) {
         return new User(null, request.firstname(), request.lastname(),
-                        request.email(), request.password(), null);
+                        request.email(), request.password(), request.role(), null);
     }
 }
