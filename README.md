@@ -1,1 +1,1 @@
-# Skills Lab
+# Skills Lab Academy
