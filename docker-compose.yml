@@ -1,0 +1,24 @@
+services:
+  postgres:
+    container_name: postgres_sql
+    image: postgres:15-bullseye
+    environment:
+      POSTGRES_DB: skills_lab_academy
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - skills_lab_academy_network
+
+
+volumes:
+  postgres_data:
+
+
+networks:
+  skills_lab_academy_network:
+    driver: bridge
