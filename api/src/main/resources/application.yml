@@ -1,0 +1,28 @@
+server:
+  port: ${PORT}
+  address: ${ADDRESS}
+
+spring:
+  application:
+    name: SkillsLabAcademyAPI
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: ${DB_SCHEMA}
+    hibernate:
+      ddlAuto: update
+  sql:
+    init:
+      mode: always
+  main:
+    banner-mode: off
+  output:
+    ansi:
+      enabled: ALWAYS
