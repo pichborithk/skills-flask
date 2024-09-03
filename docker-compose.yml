@@ -3,9 +3,9 @@ services:
     container_name: postgres_sql
     image: postgres:15-bullseye
     environment:
-      POSTGRES_DB: skills_lab_academy
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB:
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
     ports:
       - "5432:5432"
     restart: unless-stopped
