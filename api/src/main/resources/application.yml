@@ -16,8 +16,8 @@ spring:
     properties:
       hibernate:
         default_schema: ${DB_SCHEMA}
-    hibernate:
-      ddlAuto: update
+#    hibernate:
+#      ddlAuto: update
   sql:
     init:
       mode: always
