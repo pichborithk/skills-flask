@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div className='bg-primary shadow-full text-white'>
+    <footer className='bg-primary shadow-full text-white'>
       <div className='mx-auto flex max-w-7xl flex-row justify-between py-8'>
         <div className='w-1/4'>
           <h1 className='pb-4 text-xl font-semibold'>Skills Lab Academy</h1>
@@ -37,7 +37,7 @@ const Footer = () => {
           reserved
         </p>
       </div>
-    </div>
+    </footer>
   );
 };
 
