@@ -22,8 +22,8 @@
   }
 }
 
-@layer base {
+/* @layer base {
   html {
     @apply font-gilroy;
   }
-}
+} */
