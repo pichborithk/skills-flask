@@ -33,10 +33,10 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    tokenClear() {
+    tokenClear(state) {
       localStorage.removeItem('TOKEN');
       toast.success('Logged Out');
-      return initialState;
+      state.token = '';
     },
   },
   extraReducers: builder => {
