@@ -16,6 +16,9 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final JwtAuthFilter jwtAuthFilter;
+    private final JwtAuthEntryPoint jwtAuthEntryPoint;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
@@ -27,13 +30,12 @@ public class SecurityConfig {
 //                          .anyRequest().authenticated()
                 req -> req.anyRequest().permitAll()
             )
-//            .sessionManagement(
-//                session -> session.sessionCreationPolicy(STATELESS))
-//            .exceptionHandling(
-//                ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
-//            .addFilterBefore(jwtAuthFilter,
-//                             UsernamePasswordAuthenticationFilter.class)
-        ;
+            .sessionManagement(
+                session -> session.sessionCreationPolicy(STATELESS))
+            .exceptionHandling(
+                ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
+            .addFilterBefore(jwtAuthFilter,
+                             UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
