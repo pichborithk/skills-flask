@@ -11,7 +11,7 @@ const Courses = () => {
     <div className='section-min-height mx-auto grid max-w-7xl grid-cols-5 justify-between gap-8 py-40'>
       <FilterTag />
       <div className='col-span-3 flex flex-col items-center justify-start gap-8'>
-        <div className='flex w-full items-center justify-between gap-4 rounded-lg p-4 shadow-2xl'>
+        <div className='shadow-full flex w-full items-center justify-between gap-4 rounded-lg p-4'>
           <FaUserCircle size={40} color='orange' />
           <input
             placeholder='Search...'
