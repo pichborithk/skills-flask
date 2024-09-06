@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Courses, ErrorPage, Login, Register } from './routes';
+import { Courses, Dashboard, ErrorPage, Login, Register } from './routes';
 import { Home } from './components';
 import { Provider } from 'react-redux';
 import store from './app/store';
@@ -29,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: 'register',
         element: <Register />,
+      },
+      {
+        path: 'dashboard',
+        element: <Dashboard />,
       },
     ],
   },
