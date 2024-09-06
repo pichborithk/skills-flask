@@ -1,10 +1,10 @@
-import { section } from './section.types';
-import { User } from './user.types';
+import { SectionResponse } from './section.types';
+import { UserResponse } from './user.types';
 
-export type Course = {
+export type CourseResponse = {
   id: number;
   title: string;
   price: number;
-  instructor: User;
-  sections: section[];
+  instructor: UserResponse;
+  sections: SectionResponse[];
 };
