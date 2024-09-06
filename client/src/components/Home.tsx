@@ -18,9 +18,11 @@ const Home = () => {
         <div className='mx-auto flex max-w-7xl items-center justify-between gap-40 px-20 py-40'>
           <div className='relative flex flex-col gap-4'>
             <h2 className='absolute -translate-x-12 -translate-y-12 text-9xl font-bold text-blue-200'>
-              RevLearn
+              SkillsLab
             </h2>
-            <h2 className='-translate-x-4 text-8xl font-bold'>RevLearn</h2>
+            <h2 className='text-primary -translate-x-4 text-8xl font-bold'>
+              Skills Lab
+            </h2>
 
             <h3 className='text-4xl'>new way to learn</h3>
             <p>
