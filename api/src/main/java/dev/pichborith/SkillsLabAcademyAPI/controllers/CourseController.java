@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/courses")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "${CLIENT_URL}")
 public class CourseController {
 
     private final CourseService courseService;
