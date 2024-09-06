@@ -17,7 +17,7 @@ export default {
         status: { success: '#00B087', error: '#FFC5C5' },
       },
       boxShadow: {
-        full: '0px 1px 6px 1px rgba(0, 0, 0, 0.4)',
+        full: '0px 1px 6px 1px rgba(0, 0, 0, 0.2)',
       },
     },
   },
