@@ -4,7 +4,7 @@ import logo from '../assets/images/Skills_Lab.png';
 
 const Navbar = () => {
   return (
-    <header className='absolute top-0 w-full bg-white shadow-sm'>
+    <header className='absolute top-0 w-full bg-slate-50 shadow-sm'>
       <section className='mx-auto flex max-w-7xl items-center px-8 py-2'>
         <Link to='/'>
           <img src={logo} alt='logo web site' className='max-h-24' />
