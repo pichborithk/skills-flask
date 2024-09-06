@@ -1,6 +1,5 @@
 import javaScriptLogo from '../assets/images/JavaScript-logo.png';
 import { FaUserCircle } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
 import { Course } from '../types/course.types';
 
 type Props = {
@@ -8,15 +7,8 @@ type Props = {
 };
 
 const CourseCard = ({ course }: Props) => {
-  const nav = useNavigate();
-
   return (
-    <div
-      className='flex w-full items-center gap-4 rounded-lg bg-slate-50 p-4 shadow-2xl'
-      onClick={() => {
-        nav(`/courses/${course.id}`);
-      }}
-    >
+    <div className='flex w-full items-center gap-4 rounded-lg bg-slate-50 p-4 shadow-2xl'>
       <img src={javaScriptLogo} alt='javascript' className='w-40' />
       <div className='flex h-full grow flex-col justify-between pb-4'>
         <div className='flex flex-col gap-2'>
