@@ -1,6 +1,9 @@
-import { Link } from 'react-router-dom';
-import { useRef, useState } from 'react';
-import Select from 'react-select';
+import { Link, useNavigate } from 'react-router-dom';
+import { FormEvent, useEffect, useRef, useState } from 'react';
+import Select, { SingleValue } from 'react-select';
+// import Loading from '../components/Loading';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { register } from '../app/reducers';
 
 type RoleOption = {
   value: string;
@@ -8,23 +11,45 @@ type RoleOption = {
 };
 
 const Register = () => {
+  const { token, isLoading } = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const usernameInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
-  const [role, setRole] = useState<RoleOption>({ value: '', label: '' });
+  const [roleOption, setRoleOption] = useState<RoleOption>({
+    value: '',
+    label: '',
+  });
 
-  function handleSelect(option) {
-    setRole(option);
+  function handleSelect(option: SingleValue<RoleOption>): void {
+    if (option) {
+      setRoleOption(option);
+    }
   }
 
-  // function handleSubmit(event: FormEvent<HTMLFormElement>) {
-  //   event.preventDefault();
-  //   console.log(roleSelect.current.getValue());
-  // }
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+      return;
+    }
+  }, [token]);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const username = usernameInput.current!.value;
+    const password = passwordInput.current!.value;
+    const role = roleOption.value;
+
+    dispatch(register({ username, password, role }));
+
+    usernameInput.current!.value = '';
+    passwordInput.current!.value = '';
+  }
 
   return (
     <div className='section-min-height mx-auto mb-8 flex max-w-7xl flex-col items-center justify-center gap-4 px-2'>
       <form
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         className='relative flex w-1/2 flex-col items-center justify-evenly gap-8 rounded-2xl border px-20 py-24 text-xl text-primary shadow-2xl'
       >
         <h1 className='text-4xl font-bold text-primary'>Create An Account</h1>
@@ -62,8 +87,8 @@ const Register = () => {
           </label>
           <Select
             isSearchable={false}
-            value={role}
-            onChange={handleSelect}
+            value={roleOption}
+            onChange={option => handleSelect(option)}
             options={[
               { value: 'USER', label: 'Student' },
               { value: 'INSTRUCTOR', label: 'Instructor' },
@@ -85,7 +110,10 @@ const Register = () => {
           />
         </fieldset>
         <div className='mt-4 w-full text-center'>
-          <button className='mb-8 w-full rounded-lg border-2 border-primary px-4 py-2 font-semibold hover:bg-primary hover:text-slate-50'>
+          <button
+            className='mb-8 w-full rounded-lg border-2 border-primary px-4 py-2 font-semibold hover:bg-primary hover:text-slate-50'
+            disabled={isLoading}
+          >
             Create Account
           </button>
           <p className='text-base'>
