@@ -1,29 +1,37 @@
 import javaScriptLogo from '../assets/images/JavaScript-logo.png';
 import { FaUserCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { Course } from '../types/course.types';
 
-const CourseCard = () => {
+type Props = {
+  course: Course;
+};
+
+const CourseCard = ({ course }: Props) => {
   const nav = useNavigate();
 
   return (
     <div
       className='flex w-full items-center gap-4 rounded-lg p-4 shadow-2xl'
       onClick={() => {
-        nav('/course/1');
+        nav(`/courses/${course.id}`);
       }}
     >
       <img src={javaScriptLogo} alt='javascript' className='w-40' />
       <div className='flex h-full grow flex-col justify-between pb-4'>
         <div className='flex flex-col gap-2'>
-          <h3 className='text-2xl font-bold'>JavaScript Advance Topics</h3>
+          <div className='flex items-center justify-between'>
+            <h3 className='text-2xl font-bold'>{course.title}</h3>
+            <h3 className='text-xl'>{course.price} $</h3>
+          </div>
           <div className='flex gap-2 text-xs'>
-            <p className='bg-secondary-500 text-secondary-50 rounded-full px-4 py-2'>
+            <p className='rounded-full bg-blue-500 px-4 py-2 text-blue-50'>
               Frontend
             </p>
-            <p className='bg-secondary-500 text-secondary-50 rounded-full px-4 py-2'>
+            <p className='rounded-full bg-blue-500 px-4 py-2 text-blue-50'>
               Backend
             </p>
-            <p className='bg-secondary-500 text-secondary-50 rounded-full px-4 py-2'>
+            <p className='rounded-full bg-blue-500 px-4 py-2 text-blue-50'>
               DevOps
             </p>
           </div>
@@ -32,7 +40,7 @@ const CourseCard = () => {
           <div className='flex items-center gap-2'>
             <FaUserCircle size={40} color='orange' />
             <div>
-              <p>Uzumaki Naruto</p>
+              <p>{course.instructor.username}</p>
               <p className='text-xs text-slate-400'>
                 Last updated: a minute ago
               </p>
