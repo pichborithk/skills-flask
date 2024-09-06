@@ -12,7 +12,7 @@ const CourseCard = ({ course }: Props) => {
 
   return (
     <div
-      className='flex w-full items-center gap-4 rounded-lg p-4 shadow-2xl'
+      className='flex w-full items-center gap-4 rounded-lg bg-slate-50 p-4 shadow-2xl'
       onClick={() => {
         nav(`/courses/${course.id}`);
       }}
