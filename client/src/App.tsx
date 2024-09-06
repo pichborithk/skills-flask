@@ -1,5 +1,16 @@
+import { Outlet } from 'react-router-dom';
+import { Footer, Navbar, Notification, ScrollToTop } from './components';
+
 const App = () => {
-  return <div className='flex p-3'>App</div>;
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+      <ScrollToTop />
+      <Notification />
+      <Footer />
+    </>
+  );
 };
 
 export default App;
