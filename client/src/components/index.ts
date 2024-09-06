@@ -3,3 +3,5 @@ export { default as Notification } from './Notification';
 export { default as Navbar } from './Navbar';
 export { default as Home } from './Home';
 export { default as Footer } from './Footer';
+export { default as Podcasts } from './Podcasts';
+export { default as FilterTag } from './FilterTag';
