@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/sections")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "${CLIENT_URL}")
 public class SectionController {
 
     private final SectionService sectionService;
