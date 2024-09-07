@@ -10,6 +10,7 @@ import {
   ErrorPage,
   Login,
   Register,
+  Section,
 } from './routes';
 import { CoursesBoard, Home, ProfileBoard } from './components';
 import { Provider } from 'react-redux';
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: 'courses/:courseId',
         element: <Course />,
+      },
+      {
+        path: 'sections/:sectionId',
+        element: <Section />,
       },
       {
         path: 'login',
