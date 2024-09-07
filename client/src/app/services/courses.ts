@@ -9,6 +9,13 @@ export const courseSlice = createApi({
       query: () => 'courses',
     }),
 
+    getCourseById: builder.query<CourseResponse, number>({
+      query: courseId => ({
+        url: `courses/${courseId}`,
+        method: 'GET',
+      }),
+    }),
+
     getCoursesByInstructorId: builder.query<CourseResponse[], number>({
       query: instructorId => ({
         url: `courses/instructor/${instructorId}`,
@@ -18,5 +25,8 @@ export const courseSlice = createApi({
   }),
 });
 
-export const { useGetCoursesQuery, useGetCoursesByInstructorIdQuery } =
-  courseSlice;
+export const {
+  useGetCoursesQuery,
+  useGetCourseByIdQuery,
+  useGetCoursesByInstructorIdQuery,
+} = courseSlice;
