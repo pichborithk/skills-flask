@@ -20,7 +20,6 @@ const InstructorCoursesBoard = () => {
             <th className='px-16 text-left'>Title</th>
             <th>Price</th>
             <th>Status</th>
-            <th></th>
           </tr>
         </thead>
         <tbody className='text-center'>
@@ -51,7 +50,7 @@ const CourseRow = ({ course }: CourseRowProps) => {
       </td>
       <td>
         <Link
-          to='/'
+          to={`/courses/${course.id}`}
           className='rounded-md border-2 border-pink-200 bg-primary px-4 py-2 text-sm text-slate-50'
         >
           View
