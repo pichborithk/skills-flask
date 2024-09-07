@@ -26,4 +26,10 @@ public class CourseController {
     public CourseResponse getCourseById(@PathVariable int courseId) {
         return courseService.getById(courseId);
     }
+
+    @ResponseBody
+    @GetMapping("instructor/{instructorId}")
+    public List<CourseResponse> getCoursesByInstructorId(@PathVariable int instructorId) {
+        return courseService.getAllByInstructorId(instructorId);
+    }
 }

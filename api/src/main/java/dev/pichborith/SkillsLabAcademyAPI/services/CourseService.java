@@ -35,4 +35,11 @@ public class CourseService {
 
         return courseMapper.toCourseResponse(course, sections);
     }
+
+    public List<CourseResponse> getAllByInstructorId(int instructorId) {
+        return courseRepo.findAllByInstructorId(instructorId)
+                         .stream()
+                         .map(courseMapper::toCourseResponse)
+                         .toList();
+    }
 }

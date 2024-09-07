@@ -15,4 +15,6 @@ public interface CourseRepo extends JpaRepository<Course, Integer> {
 
     @Query("FROM Course c JOIN FETCH c.sections WHERE c.id = :courseId")
     Optional<Course> findByIdWithSections(int courseId);
+
+    List<Course> findAllByInstructorId(int instructorId);
 }
