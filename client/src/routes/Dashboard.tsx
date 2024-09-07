@@ -36,7 +36,7 @@ const Dashboard = () => {
           </li>
           <li>Mail</li>
         </ul>
-        <Outlet />
+        <Outlet context={{ token, user }} />
       </div>
     </div>
   );
