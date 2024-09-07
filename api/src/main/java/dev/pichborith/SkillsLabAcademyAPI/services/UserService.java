@@ -1,6 +1,7 @@
 package dev.pichborith.SkillsLabAcademyAPI.services;
 
 import dev.pichborith.SkillsLabAcademyAPI.dto.UserRequest;
+import dev.pichborith.SkillsLabAcademyAPI.dto.UserResponse;
 import dev.pichborith.SkillsLabAcademyAPI.exceptions.ConflictException;
 import dev.pichborith.SkillsLabAcademyAPI.exceptions.NotFoundException;
 import dev.pichborith.SkillsLabAcademyAPI.exceptions.UnauthorizedException;
@@ -8,6 +9,7 @@ import dev.pichborith.SkillsLabAcademyAPI.mapper.UserMapper;
 import dev.pichborith.SkillsLabAcademyAPI.models.User;
 import dev.pichborith.SkillsLabAcademyAPI.repositories.UserRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -46,6 +48,16 @@ public class UserService implements UserDetailsService {
         }
 
         return user;
+    }
+
+    public UserResponse getCurrentUserDetails() {
+        var auth =  SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null || !(auth.getPrincipal() instanceof User)) {
+            throw new UnauthorizedException("Invalid token");
+        }
+
+        return userMapper.toUserResponse((User) auth.getPrincipal());
     }
 
     @Override
