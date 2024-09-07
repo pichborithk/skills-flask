@@ -4,7 +4,7 @@ import { DashboardContext } from '../types/Dashboard.types';
 import Loading from './Loading';
 import { CourseResponse } from '../types/course.types';
 
-const InstructorCoursesBoard = () => {
+const InstructorCoursesTable = () => {
   const { user } = useOutletContext<DashboardContext>();
   const { data: courses, isLoading } = useGetCoursesByInstructorIdQuery(
     user.id,
@@ -60,4 +60,4 @@ const CourseRow = ({ course }: CourseRowProps) => {
   );
 };
 
-export default InstructorCoursesBoard;
+export default InstructorCoursesTable;

@@ -12,7 +12,7 @@ import {
   Register,
   Section,
 } from './routes';
-import { CoursesBoard, Home, ProfileBoard } from './components';
+import { CoursesTable, Home, ProfileBoard } from './components';
 import { Provider } from 'react-redux';
 import store from './app/store';
 
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         element: <Dashboard />,
         children: [
           { index: true, element: <ProfileBoard /> },
-          { path: 'courses', element: <CoursesBoard /> },
+          { path: 'courses', element: <CoursesTable /> },
         ],
       },
     ],
