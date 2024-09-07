@@ -23,4 +23,13 @@ public class AuthController {
         String token = jwtService.generateToken(user);
         return new AuthResponse(token);
     }
+
+    @PostMapping("login")
+    @ResponseBody
+    public AuthResponse login(@RequestBody UserRequest request) {
+        var user = userService.verify(request);
+        String token = jwtService.generateToken(user);
+        return new AuthResponse(token);
+    }
+
 }
