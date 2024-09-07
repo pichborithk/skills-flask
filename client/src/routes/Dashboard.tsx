@@ -4,15 +4,21 @@ import { useAppSelector } from '../app/hooks';
 import { useGetUserQuery } from '../app/services';
 import Loading from '../components/Loading';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Dashboard = () => {
   const { token } = useAppSelector(state => state.auth);
   const { data: user, isLoading } = useGetUserQuery(token);
   const navigate = useNavigate();
 
-  if (isLoading) return <Loading />;
+  useEffect(() => {
+    if (!token) {
+      navigate('/');
+      return;
+    }
+  }, [token]);
 
-  if (!token) return navigate('/');
+  if (isLoading) return <Loading />;
 
   return (
     <div className='bg-slate-100'>
