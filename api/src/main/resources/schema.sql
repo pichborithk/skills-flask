@@ -35,12 +35,14 @@ CREATE TABLE users_courses (
 
 CREATE TABLE sections (
     section_id SERIAL PRIMARY KEY,
+    sequence INTEGER,
     title VARCHAR(255) NOT NULL,
     course_id INTEGER REFERENCES courses(course_id)
 );
 
 CREATE TABLE lectures (
     lecture_id SERIAL PRIMARY KEY,
+    sequence INTEGER,
     title VARCHAR(255) NOT NULL,
     length INTEGER NOT NULL,
     section_id INTEGER REFERENCES sections(section_id)
