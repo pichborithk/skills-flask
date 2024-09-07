@@ -14,6 +14,27 @@ services:
     networks:
       - skills_lab_academy_network
 
+  api:
+    container_name: spring_api
+    image: skills_lab_academy_api:1.0
+    build: ./api
+    depends_on:
+      - postgres
+    environment:
+      ADDRESS:
+      PORT:
+      DB_SCHEMA:
+      DB_USERNAME:
+      DB_PASSWORD:
+      DB_URL:
+      CLIENT_URL:
+      SECRET_KEY:
+      TOKEN_EXPIRATION:
+    ports:
+      - "1337:1337"
+    networks:
+      - skills_lab_academy_network
+
 
 volumes:
   postgres_data:
