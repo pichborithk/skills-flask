@@ -5,7 +5,7 @@ import { FilterTag, Podcasts } from '../components';
 import CourseCard from '../components/CourseCard';
 import Loading from '../components/Loading';
 
-const Courses = () => {
+const AllCourses = () => {
   const { data, isLoading } = useGetCoursesQuery();
 
   if (isLoading) {
@@ -31,4 +31,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default AllCourses;

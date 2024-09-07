@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Courses, Dashboard, ErrorPage, Login, Register } from './routes';
+import { AllCourses, Dashboard, ErrorPage, Login, Register } from './routes';
 import { CoursesBoard, Home, ProfileBoard } from './components';
 import { Provider } from 'react-redux';
 import store from './app/store';
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'courses',
-        element: <Courses />,
+        element: <AllCourses />,
       },
       {
         path: 'login',
