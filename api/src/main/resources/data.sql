@@ -58,7 +58,7 @@ INSERT INTO sections (sequence, title, course_id)
 
 
 -- For Java Basics (Section 1)
-INSERT INTO lectures (title, length, section_id) VALUES
+INSERT INTO lectures (sequence, title, length, section_id) VALUES
 (1, 'What is Java?', 10, 1),
 (2, 'Setting up Java Environment', 12, 1),
 (3, 'First Java Program', 8, 1),
