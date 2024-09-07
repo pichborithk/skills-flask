@@ -17,6 +17,8 @@ public class Lecture {
     @Column(name = "lecture_id")
     private int id;
 
+    private int sequence;
+
     private String title;
 
     private int length;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class LectureMapper {
 
     public LectureResponse toLectureResponse(Lecture lecture) {
-        return new LectureResponse(lecture.getId(), lecture.getTitle(),
+        return new LectureResponse(lecture.getId(), lecture.getSequence(), lecture.getTitle(),
                                    lecture.getLength());
     }
 }

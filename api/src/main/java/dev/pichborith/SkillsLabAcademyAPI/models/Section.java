@@ -19,6 +19,8 @@ public class Section {
     @Column(name = "section_id")
     private int id;
 
+    private int sequence;
+
     private String title;
 
     @OneToMany(mappedBy = "section")

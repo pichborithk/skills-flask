@@ -16,7 +16,7 @@ public class SectionMapper {
     }
 
     public SectionResponse toSectionResponse(Section section, List<LectureResponse> lectures) {
-        return new SectionResponse(section.getId(), section.getTitle(), lectures);
+        return new SectionResponse(section.getId(), section.getSequence(), section.getTitle(), lectures);
     }
 
 }
