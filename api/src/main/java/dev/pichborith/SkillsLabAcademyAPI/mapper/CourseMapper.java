@@ -18,7 +18,7 @@ public class CourseMapper {
 
     public CourseResponse toCourseResponse(Course course, List<SectionResponse> sections) {
         var instructor = new UserResponse(course.getInstructor().getId(),
-                                          course.getInstructor().getUsername());
+                                          course.getInstructor().getUsername(), course.getInstructor().getRole());
         return new CourseResponse(course.getId(), course.getTitle(),
                                   course.getPrice(), instructor, sections);
     }
