@@ -5,3 +5,4 @@ export { default as Home } from './Home';
 export { default as Footer } from './Footer';
 export { default as Podcasts } from './Podcasts';
 export { default as FilterTag } from './FilterTag';
+export { default as ProfileBoard } from './ProfileBoard';
