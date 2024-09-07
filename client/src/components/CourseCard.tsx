@@ -1,9 +1,9 @@
 import javaScriptLogo from '../assets/images/JavaScript-logo.png';
 import { FaUserCircle } from 'react-icons/fa';
-import { Course } from '../types/course.types';
+import { CourseResponse } from '../types/course.types';
 
 type Props = {
-  course: Course;
+  course: CourseResponse;
 };
 
 const CourseCard = ({ course }: Props) => {
