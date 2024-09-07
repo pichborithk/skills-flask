@@ -5,7 +5,7 @@ import App from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import {
   AllCourses,
-  Course,
+  CourseBoard,
   Dashboard,
   ErrorPage,
   Login,
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'courses/:courseId',
-        element: <Course />,
+        element: <CourseBoard />,
       },
       {
         path: 'sections/:sectionId',

@@ -3,5 +3,5 @@ export { default as AllCourses } from './AllCourses';
 export { default as Login } from './Login';
 export { default as Register } from './Register';
 export { default as Dashboard } from './Dashboard';
-export { default as Course } from './Course';
+export { default as CourseBoard } from './CourseBoard';
 export { default as Section } from './Section';

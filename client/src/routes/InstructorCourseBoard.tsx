@@ -3,7 +3,33 @@ import { useGetCourseByIdQuery } from '../app/services';
 import Loading from '../components/Loading';
 import { SectionResponse } from '../types/section.types';
 
-const InstructorCourse = () => {
+type SectionRowProps = {
+  section: SectionResponse;
+};
+
+const SectionRow = ({ section }: SectionRowProps) => {
+  return (
+    <>
+      <td className='pl-16 text-left'>{section.sequence}</td>
+      <td className='text-left'>{section.title}</td>
+      <td>
+        <span className='rounded-md border-2 border-green-200 bg-green-100 px-4 py-2 text-sm text-green-600'>
+          Active
+        </span>
+      </td>
+      <td>
+        <Link
+          to={`/sections/${section.id}`}
+          className='rounded-md border-2 border-pink-200 bg-primary px-4 py-2 text-sm text-slate-50'
+        >
+          View
+        </Link>
+      </td>
+    </>
+  );
+};
+
+const InstructorCourseBoard = () => {
   const { courseId } = useParams();
 
   const { data: course, isLoading } = useGetCourseByIdQuery(Number(courseId!));
@@ -42,30 +68,4 @@ const InstructorCourse = () => {
   );
 };
 
-type SectionRowProps = {
-  section: SectionResponse;
-};
-
-const SectionRow = ({ section }: SectionRowProps) => {
-  return (
-    <>
-      <td className='pl-16 text-left'>{section.sequence}</td>
-      <td className='text-left'>{section.title}</td>
-      <td>
-        <span className='rounded-md border-2 border-green-200 bg-green-100 px-4 py-2 text-sm text-green-600'>
-          Active
-        </span>
-      </td>
-      <td>
-        <Link
-          to={`/sections/${section.id}`}
-          className='rounded-md border-2 border-pink-200 bg-primary px-4 py-2 text-sm text-slate-50'
-        >
-          View
-        </Link>
-      </td>
-    </>
-  );
-};
-
-export default InstructorCourse;
+export default InstructorCourseBoard;
