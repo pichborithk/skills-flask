@@ -37,9 +37,18 @@ public class CourseController {
     }
 
     @ResponseBody
-    @PostMapping()
+    @PostMapping
     public CourseResponse createCourse(@RequestBody CourseRequest request) {
         var user = userService.getCurrentUserDetails();
         return courseService.create(user, request);
     }
+
+    @ResponseBody
+    @PatchMapping("{courseId}")
+    public CourseResponse updateCourse(@PathVariable int courseId,
+                                       @RequestBody CourseRequest request) {
+        var user = userService.getCurrentUserDetails();
+        return courseService.update(user, courseId, request);
+    }
+
 }

@@ -4,6 +4,7 @@ import dev.pichborith.SkillsLabAcademyAPI.dto.CourseRequest;
 import dev.pichborith.SkillsLabAcademyAPI.dto.CourseResponse;
 import dev.pichborith.SkillsLabAcademyAPI.dto.UserResponse;
 import dev.pichborith.SkillsLabAcademyAPI.exceptions.NotFoundException;
+import dev.pichborith.SkillsLabAcademyAPI.exceptions.UnauthorizedException;
 import dev.pichborith.SkillsLabAcademyAPI.mapper.CourseMapper;
 import dev.pichborith.SkillsLabAcademyAPI.mapper.SectionMapper;
 import dev.pichborith.SkillsLabAcademyAPI.models.Course;
@@ -69,6 +70,20 @@ public class CourseService {
                                   "User with ID = %d does not exist",
                                   user.id())));
         var course = courseMapper.toCourse(request, instructor);
+
+        return courseMapper.toCourseResponse(courseRepo.save(course));
+    }
+
+    public CourseResponse update(UserResponse user, int courseId, CourseRequest request) {
+        var course = verifyInstructor(user.id(), courseId);
+        if (course == null) {
+            throw new UnauthorizedException(String.format(
+                "Course with ID = %d does not belong to Instructor with ID = %d",
+                courseId, user.id()));
+        }
+
+        course.setTitle(request.title());
+        course.setPrice(request.price());
 
         return courseMapper.toCourseResponse(courseRepo.save(course));
     }
