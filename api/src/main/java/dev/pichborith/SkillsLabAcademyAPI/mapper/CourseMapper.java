@@ -1,9 +1,11 @@
 package dev.pichborith.SkillsLabAcademyAPI.mapper;
 
+import dev.pichborith.SkillsLabAcademyAPI.dto.CourseRequest;
 import dev.pichborith.SkillsLabAcademyAPI.dto.CourseResponse;
 import dev.pichborith.SkillsLabAcademyAPI.dto.SectionResponse;
 import dev.pichborith.SkillsLabAcademyAPI.dto.UserResponse;
 import dev.pichborith.SkillsLabAcademyAPI.models.Course;
+import dev.pichborith.SkillsLabAcademyAPI.models.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,5 +23,9 @@ public class CourseMapper {
                                           course.getInstructor().getUsername(), course.getInstructor().getRole());
         return new CourseResponse(course.getId(), course.getTitle(),
                                   course.getPrice(), instructor, sections);
+    }
+
+    public Course toCourse(CourseRequest request, User instructor) {
+        return new Course(0, request.title(), request.price(), instructor, new ArrayList<>());
     }
 }

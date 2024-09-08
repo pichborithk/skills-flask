@@ -1,6 +1,8 @@
 package dev.pichborith.SkillsLabAcademyAPI.services;
 
+import dev.pichborith.SkillsLabAcademyAPI.dto.CourseRequest;
 import dev.pichborith.SkillsLabAcademyAPI.dto.CourseResponse;
+import dev.pichborith.SkillsLabAcademyAPI.dto.UserResponse;
 import dev.pichborith.SkillsLabAcademyAPI.exceptions.NotFoundException;
 import dev.pichborith.SkillsLabAcademyAPI.mapper.CourseMapper;
 import dev.pichborith.SkillsLabAcademyAPI.mapper.SectionMapper;
@@ -58,5 +60,16 @@ public class CourseService {
         }
 
         return null;
+    }
+
+    public CourseResponse create(UserResponse user, CourseRequest request) {
+        var instructor = userRepo.findById(user.id())
+                          .orElseThrow(() -> new NotFoundException(
+                              String.format(
+                                  "User with ID = %d does not exist",
+                                  user.id())));
+        var course = courseMapper.toCourse(request, instructor);
+
+        return courseMapper.toCourseResponse(courseRepo.save(course));
     }
 }
