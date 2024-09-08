@@ -7,7 +7,6 @@ import dev.pichborith.SkillsLabAcademyAPI.exceptions.NotFoundException;
 import dev.pichborith.SkillsLabAcademyAPI.exceptions.UnauthorizedException;
 import dev.pichborith.SkillsLabAcademyAPI.mapper.CourseMapper;
 import dev.pichborith.SkillsLabAcademyAPI.mapper.SectionMapper;
-import dev.pichborith.SkillsLabAcademyAPI.models.Course;
 import dev.pichborith.SkillsLabAcademyAPI.repositories.CourseRepo;
 import dev.pichborith.SkillsLabAcademyAPI.repositories.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -49,19 +48,6 @@ public class CourseService {
                          .toList();
     }
 
-    public Course verifyInstructor(int instructorId, int courseId) {
-        var course = courseRepo.findById(courseId)
-                               .orElseThrow(() -> new NotFoundException(
-                                   String.format(
-                                       "Course with ID = %d does not exist",
-                                       courseId)));
-
-        if (instructorId == course.getInstructor().getId()) {
-            return course;
-        }
-
-        return null;
-    }
 
     public CourseResponse create(UserResponse user, CourseRequest request) {
         var instructor = userRepo.findById(user.id())
@@ -75,8 +61,13 @@ public class CourseService {
     }
 
     public CourseResponse update(UserResponse user, int courseId, CourseRequest request) {
-        var course = verifyInstructor(user.id(), courseId);
-        if (course == null) {
+        var course = courseRepo.findById(courseId)
+                               .orElseThrow(() -> new NotFoundException(
+                                   String.format(
+                                       "Course with ID = %d does not exist",
+                                       courseId)));
+
+        if (user.id() != course.getInstructor().getId()) {
             throw new UnauthorizedException(String.format(
                 "Course with ID = %d does not belong to Instructor with ID = %d",
                 courseId, user.id()));
@@ -89,8 +80,13 @@ public class CourseService {
     }
 
     public void delete(UserResponse user, int courseId) {
-        var course = verifyInstructor(user.id(), courseId);
-        if (course == null) {
+        var course = courseRepo.findById(courseId)
+                               .orElseThrow(() -> new NotFoundException(
+                                   String.format(
+                                       "Course with ID = %d does not exist",
+                                       courseId)));
+
+        if (user.id() != course.getInstructor().getId()) {
             throw new UnauthorizedException(String.format(
                 "Course with ID = %d does not belong to Instructor with ID = %d",
                 courseId, user.id()));
