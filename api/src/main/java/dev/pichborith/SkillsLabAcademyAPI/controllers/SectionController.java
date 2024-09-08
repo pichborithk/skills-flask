@@ -49,10 +49,10 @@ public class SectionController {
 
     @DeleteMapping("{sectionId}")
     @ResponseBody
-    public void deleteSection(@PathVariable int sectionId, @RequestBody SectionRequest request) {
+    public void deleteSection(@PathVariable int sectionId) {
         var user = userService.getCurrentUserDetails();
 
-        sectionService.delete(user, sectionId, request);
+        sectionService.delete(user, sectionId);
     }
 }
 

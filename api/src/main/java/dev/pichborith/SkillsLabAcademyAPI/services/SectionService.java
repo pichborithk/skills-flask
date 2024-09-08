@@ -7,7 +7,7 @@ import dev.pichborith.SkillsLabAcademyAPI.exceptions.NotFoundException;
 import dev.pichborith.SkillsLabAcademyAPI.exceptions.UnauthorizedException;
 import dev.pichborith.SkillsLabAcademyAPI.mapper.LectureMapper;
 import dev.pichborith.SkillsLabAcademyAPI.mapper.SectionMapper;
-import dev.pichborith.SkillsLabAcademyAPI.models.Section;
+import dev.pichborith.SkillsLabAcademyAPI.repositories.CourseRepo;
 import dev.pichborith.SkillsLabAcademyAPI.repositories.SectionRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class SectionService {
     private final SectionRepo sectionRepo;
     private final SectionMapper sectionMapper;
     private final LectureMapper lectureMapper;
-    private final CourseService courseService;
+    private final CourseRepo courseRepo;
 
     public List<SectionResponse> getAll() {
 
@@ -46,12 +46,19 @@ public class SectionService {
 
     public SectionResponse create(UserResponse user, SectionRequest request) {
         var courseId = request.courseId();
-        var course = courseService.verifyInstructor(user.id(), courseId);
-        if (course == null) {
+        var course = courseRepo.findById(courseId)
+                               .orElseThrow(() -> new NotFoundException(
+                                   String.format(
+                                       "Course with ID = %d does not exist",
+                                       courseId)));
+
+        if (user.id() != course.getInstructor().getId()) {
             throw new UnauthorizedException(String.format(
                 "Course with ID = %d does not belong to Instructor with ID = %d",
                 courseId, user.id()));
         }
+
+
         var section = sectionRepo.save(
             sectionMapper.toSection(request, course));
 
@@ -60,20 +67,30 @@ public class SectionService {
 
     public SectionResponse update(UserResponse user, int sectionId,
                                   SectionRequest request) {
+        var sectionView = sectionRepo.findViewById(sectionId)
+                                     .orElseThrow(() -> new NotFoundException(
+                                         String.format(
+                                             "Section with ID = %d does not exist",
+                                             sectionId)));
+
         var courseId = request.courseId();
-        var course = courseService.verifyInstructor(user.id(), courseId);
-        if (course == null) {
+        if (courseId != sectionView.getCourseId()) {
             throw new UnauthorizedException(String.format(
-                "Course with ID = %d does not belong to Instructor with ID = %d",
-                courseId, user.id()));
+                "Section with ID = %d does not belong to Course with ID = %d",
+                sectionId, courseId));
         }
 
-        var section = verifyCourse(courseId, sectionId);
-        if (section == null) {
+        if (user.id() != sectionView.getInstructorId()) {
             throw new UnauthorizedException(String.format(
-                "Course with ID = %d does not have to Section with ID = %d",
-                courseId, sectionId));
+                "Section with ID = %d does not belong to Instructor with ID = %d",
+                sectionId, user.id()));
         }
+
+        var section = sectionRepo.findById(sectionId)
+                                 .orElseThrow(() -> new NotFoundException(
+                                     String.format(
+                                         "Section with ID = %d does not exist",
+                                         sectionId)));
 
         section.setSequence(request.sequence());
         section.setTitle(request.title());
@@ -81,36 +98,20 @@ public class SectionService {
         return sectionMapper.toSectionResponse(sectionRepo.save(section));
     }
 
-    public Section verifyCourse(int courseId, int sectionId) {
-        var section = sectionRepo.findById(sectionId)
-                                 .orElseThrow(() -> new NotFoundException(
-                                     String.format(
-                                         "Section with ID = %d does not exist",
-                                         sectionId)));
+    public void delete(UserResponse user, int sectionId) {
 
-        if (courseId == section.getCourse().getId()) {
-            return section;
-        }
+        var sectionView = sectionRepo.findViewById(sectionId)
+                                     .orElseThrow(() -> new NotFoundException(
+                                         String.format(
+                                             "Section with ID = %d does not exist",
+                                             sectionId)));
 
-        return null;
-    }
-
-    public void delete(UserResponse user, int sectionId, SectionRequest request) {
-        var courseId = request.courseId();
-        var course = courseService.verifyInstructor(user.id(), courseId);
-        if (course == null) {
+        if (user.id() != sectionView.getInstructorId()) {
             throw new UnauthorizedException(String.format(
-                "Course with ID = %d does not belong to Instructor with ID = %d",
-                courseId, user.id()));
+                "Section with ID = %d does not belong to Instructor with ID = %d",
+                sectionId, user.id()));
         }
 
-        var section = verifyCourse(courseId, sectionId);
-        if (section == null) {
-            throw new UnauthorizedException(String.format(
-                "Course with ID = %d does not have to Section with ID = %d",
-                courseId, sectionId));
-        }
-
-        sectionRepo.delete(section);
+        sectionRepo.deleteById(sectionId);
     }
 }

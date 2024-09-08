@@ -1,5 +1,6 @@
 package dev.pichborith.SkillsLabAcademyAPI.repositories;
 
+import dev.pichborith.SkillsLabAcademyAPI.dto.SectionView;
 import dev.pichborith.SkillsLabAcademyAPI.models.Section;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,4 +11,13 @@ public interface SectionRepo extends JpaRepository<Section, Integer> {
 
     @Query("FROM Section s LEFT JOIN FETCH s.lectures WHERE s.id = :sectionId")
     Optional<Section> findByIdWithLectures(int sectionId);
+
+    @Query(value = """
+        SELECT s.*, c.title AS course_title, c.price, c.instructor_id, u.username AS instructor
+        FROM sections AS s
+        JOIN courses AS c ON c.course_id = s.course_id
+        JOIN users AS u ON u.user_id = c.instructor_id
+        WHERE s.section_id = :sectionId
+        """, nativeQuery = true)
+    Optional<SectionView> findViewById(int sectionId);
 }
