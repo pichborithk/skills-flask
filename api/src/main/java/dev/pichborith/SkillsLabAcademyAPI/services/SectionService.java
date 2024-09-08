@@ -7,6 +7,7 @@ import dev.pichborith.SkillsLabAcademyAPI.exceptions.NotFoundException;
 import dev.pichborith.SkillsLabAcademyAPI.exceptions.UnauthorizedException;
 import dev.pichborith.SkillsLabAcademyAPI.mapper.LectureMapper;
 import dev.pichborith.SkillsLabAcademyAPI.mapper.SectionMapper;
+import dev.pichborith.SkillsLabAcademyAPI.models.Section;
 import dev.pichborith.SkillsLabAcademyAPI.repositories.CourseRepo;
 import dev.pichborith.SkillsLabAcademyAPI.repositories.SectionRepo;
 import lombok.RequiredArgsConstructor;
@@ -52,9 +53,46 @@ public class SectionService {
                 "Course with ID = %d does not belong to Instructor with ID = %d",
                 courseId, user.id()));
         }
-        var section = sectionRepo.save(sectionMapper.toSection(request, course));
+        var section = sectionRepo.save(
+            sectionMapper.toSection(request, course));
 
         return sectionMapper.toSectionResponse(section);
     }
 
+    public SectionResponse update(UserResponse user, int sectionId,
+                                  SectionRequest request) {
+        var courseId = request.courseId();
+        var course = courseService.verifyInstructor(user.id(), courseId);
+        if (course == null) {
+            throw new UnauthorizedException(String.format(
+                "Course with ID = %d does not belong to Instructor with ID = %d",
+                courseId, user.id()));
+        }
+
+        var section = verifyCourse(courseId, sectionId);
+        if (section == null) {
+            throw new UnauthorizedException(String.format(
+                "Course with ID = %d does not have to Section with ID = %d",
+                courseId, sectionId));
+        }
+
+        section.setSequence(request.sequence());
+        section.setTitle(request.title());
+
+        return sectionMapper.toSectionResponse(sectionRepo.save(section));
+    }
+
+    public Section verifyCourse(int courseId, int sectionId) {
+        var section = sectionRepo.findById(sectionId)
+                                 .orElseThrow(() -> new NotFoundException(
+                                     String.format(
+                                         "Section with ID = %d does not exist",
+                                         sectionId)));
+
+        if (courseId == section.getCourse().getId()) {
+            return section;
+        }
+
+        return null;
+    }
 }

@@ -37,5 +37,15 @@ public class SectionController {
 
         return sectionService.create(user, request);
     }
+
+    @PatchMapping("{sectionId}")
+    @ResponseBody
+    public SectionResponse updateSection(@PathVariable int sectionId,
+                                         @RequestBody SectionRequest request) {
+        var user = userService.getCurrentUserDetails();
+
+        return sectionService.update(user, sectionId, request);
+    }
 }
+
 
