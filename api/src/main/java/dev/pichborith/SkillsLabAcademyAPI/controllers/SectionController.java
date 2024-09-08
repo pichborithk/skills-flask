@@ -46,6 +46,14 @@ public class SectionController {
 
         return sectionService.update(user, sectionId, request);
     }
+
+    @DeleteMapping("{sectionId}")
+    @ResponseBody
+    public void deleteSection(@PathVariable int sectionId, @RequestBody SectionRequest request) {
+        var user = userService.getCurrentUserDetails();
+
+        sectionService.delete(user, sectionId, request);
+    }
 }
 
 
