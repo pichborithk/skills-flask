@@ -1,7 +1,9 @@
 package dev.pichborith.SkillsLabAcademyAPI.mapper;
 
 import dev.pichborith.SkillsLabAcademyAPI.dto.LectureResponse;
+import dev.pichborith.SkillsLabAcademyAPI.dto.SectionRequest;
 import dev.pichborith.SkillsLabAcademyAPI.dto.SectionResponse;
+import dev.pichborith.SkillsLabAcademyAPI.models.Course;
 import dev.pichborith.SkillsLabAcademyAPI.models.Section;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +21,7 @@ public class SectionMapper {
         return new SectionResponse(section.getId(), section.getSequence(), section.getTitle(), lectures);
     }
 
+    public Section toSection(SectionRequest request, Course course) {
+        return new Section(0, request.sequence(), request.title(), course, new ArrayList<>());
+    }
 }

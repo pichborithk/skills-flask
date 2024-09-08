@@ -1,7 +1,9 @@
 package dev.pichborith.SkillsLabAcademyAPI.controllers;
 
+import dev.pichborith.SkillsLabAcademyAPI.dto.SectionRequest;
 import dev.pichborith.SkillsLabAcademyAPI.dto.SectionResponse;
 import dev.pichborith.SkillsLabAcademyAPI.services.SectionService;
+import dev.pichborith.SkillsLabAcademyAPI.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,7 @@ import java.util.List;
 public class SectionController {
 
     private final SectionService sectionService;
+    private final UserService userService;
 
     @GetMapping
     @ResponseBody
@@ -25,6 +28,14 @@ public class SectionController {
     @ResponseBody
     public SectionResponse getSectionById(@PathVariable int sectionId) {
         return sectionService.getById(sectionId);
+    }
+
+    @PostMapping
+    @ResponseBody
+    public SectionResponse createSection(@RequestBody SectionRequest request) {
+        var user = userService.getCurrentUserDetails();
+
+        return sectionService.create(user, request);
     }
 }
 

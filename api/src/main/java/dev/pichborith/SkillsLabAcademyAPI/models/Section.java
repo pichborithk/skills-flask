@@ -23,10 +23,11 @@ public class Section {
 
     private String title;
 
-    @OneToMany(mappedBy = "section")
-    private List<Lecture> lectures;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @OneToMany(mappedBy = "section")
+    private List<Lecture> lectures;
+
 }
