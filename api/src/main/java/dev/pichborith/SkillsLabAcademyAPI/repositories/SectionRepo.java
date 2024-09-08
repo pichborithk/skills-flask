@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface SectionRepo extends JpaRepository<Section, Integer> {
 
-    @Query("FROM Section s JOIN FETCH s.lectures WHERE s.id = :sectionId")
+    @Query("FROM Section s LEFT JOIN FETCH s.lectures WHERE s.id = :sectionId")
     Optional<Section> findByIdWithLectures(int sectionId);
 }
