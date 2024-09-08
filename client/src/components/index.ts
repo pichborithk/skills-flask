@@ -7,3 +7,4 @@ export { default as Podcasts } from './Podcasts';
 export { default as FilterTag } from './FilterTag';
 export { default as ProfileBoard } from './ProfileBoard';
 export { default as CoursesTable } from './CoursesTable';
+export { default as CreateSectionModal } from './CreateSectionModal';

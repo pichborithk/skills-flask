@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { SectionResponse } from '../../types/section.types';
+import { SectionRequest, SectionResponse } from '../../types/section.types';
 
 export const sectionSlice = createApi({
   reducerPath: 'sections',
@@ -11,7 +11,19 @@ export const sectionSlice = createApi({
         method: 'GET',
       }),
     }),
+
+    createSection: builder.mutation<SectionResponse, Partial<SectionRequest>>({
+      query: ({ token, ...section }) => ({
+        url: `sections`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: section,
+      }),
+    }),
   }),
 });
 
-export const { useGetSectionByIdQuery } = sectionSlice;
+export const { useGetSectionByIdQuery, useCreateSectionMutation } =
+  sectionSlice;

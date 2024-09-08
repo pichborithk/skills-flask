@@ -6,3 +6,11 @@ export type SectionResponse = {
   title: string;
   lectures: LectureResponse[];
 };
+
+export type SectionRequest = {
+  token: string;
+  id: number;
+  sequence: number;
+  title: string;
+  courseId: number;
+};
