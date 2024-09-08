@@ -10,11 +10,12 @@ import java.util.Optional;
 public interface CourseRepo extends JpaRepository<Course, Integer> {
 
     // This is method for query courses join with instructors if Fetch Type is Lazy
-    @Query("FROM Course c LEFT JOIN FETCH c.instructor")
+    @Query("FROM Course c JOIN FETCH c.instructor")
     List<Course> findAllWithInstructor();
 
     @Query("FROM Course c LEFT JOIN FETCH c.sections WHERE c.id = :courseId")
     Optional<Course> findByIdWithSections(int courseId);
 
     List<Course> findAllByInstructorId(int instructorId);
+
 }
