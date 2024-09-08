@@ -4,6 +4,7 @@ import { CourseResponse } from '../../types/course.types';
 export const courseSlice = createApi({
   reducerPath: 'courses',
   baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_API_URL}` }),
+  // tagTypes: ['Course'],
   endpoints: builder => ({
     getCourses: builder.query<CourseResponse[], void>({
       query: () => 'courses',
@@ -14,6 +15,7 @@ export const courseSlice = createApi({
         url: `courses/${courseId}`,
         method: 'GET',
       }),
+      // providesTags: ['Course'],
     }),
 
     getCoursesByInstructorId: builder.query<CourseResponse[], number>({
@@ -22,6 +24,20 @@ export const courseSlice = createApi({
         method: 'GET',
       }),
     }),
+
+    // createSection: builder.mutation<SectionResponse, Partial<SectionRequest>>({
+    //   query: ({ token, ...section }) => ({
+    //     url: `sections`,
+    //     method: 'POST',
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //     body: section,
+    //   }),
+    //   invalidatesTags: (result, error, arg) => [
+    //     { type: 'Course', courseId: arg.courseId },
+    //   ],
+    // }),
   }),
 });
 
