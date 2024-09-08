@@ -87,4 +87,15 @@ public class CourseService {
 
         return courseMapper.toCourseResponse(courseRepo.save(course));
     }
+
+    public void delete(UserResponse user, int courseId) {
+        var course = verifyInstructor(user.id(), courseId);
+        if (course == null) {
+            throw new UnauthorizedException(String.format(
+                "Course with ID = %d does not belong to Instructor with ID = %d",
+                courseId, user.id()));
+        }
+
+        courseRepo.delete(course);
+    }
 }

@@ -29,6 +29,6 @@ public class Course {
     @JoinColumn(name = "instructor_id", referencedColumnName = "user_id")
     private User instructor;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Section> sections;
 }

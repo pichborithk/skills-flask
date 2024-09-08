@@ -51,4 +51,10 @@ public class CourseController {
         return courseService.update(user, courseId, request);
     }
 
+    @ResponseBody
+    @DeleteMapping("{courseId}")
+    public void deleteCourse(@PathVariable int courseId) {
+        var user = userService.getCurrentUserDetails();
+        courseService.delete(user, courseId);
+    }
 }
