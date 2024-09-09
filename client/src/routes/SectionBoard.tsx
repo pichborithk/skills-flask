@@ -3,7 +3,7 @@ import { useGetSectionByIdQuery } from '../app/services/sections';
 import Loading from '../components/Loading';
 import { LectureResponse } from '../types/lecture.types';
 
-const Section = () => {
+const SectionBoard = () => {
   const { sectionId } = useParams();
   const { data: section, isLoading } = useGetSectionByIdQuery(
     Number(sectionId!),
@@ -71,4 +71,4 @@ const LectureRow = ({ lecture }: LectureRowProps) => {
   );
 };
 
-export default Section;
+export default SectionBoard;
