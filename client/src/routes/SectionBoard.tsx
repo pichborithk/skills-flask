@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa6';
 
 import { useGetSectionByIdQuery } from '../app/services/sections';
 import Loading from '../components/Loading';
@@ -14,7 +15,12 @@ const SectionBoard = () => {
 
   return (
     <div className='section-min-height mx-auto flex max-w-7xl flex-col gap-8 py-40'>
-      <h1 className='px-8 text-4xl font-bold text-primary'>{section?.title}</h1>
+      <div className='flex items-center gap-4 px-4 text-4xl font-bold text-primary'>
+        <Link to='/dashboard/courses'>
+          <FaArrowLeft />
+        </Link>
+        <h1>{section?.title}</h1>
+      </div>
       <div className='w-full rounded-md bg-slate-50 shadow-sm'>
         <table className='table w-full table-auto'>
           <thead>
