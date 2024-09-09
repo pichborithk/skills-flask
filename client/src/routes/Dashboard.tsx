@@ -1,14 +1,16 @@
 import { PiHandWavingFill } from 'react-icons/pi';
 
-import { useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useGetUserQuery } from '../app/services';
 import Loading from '../components/Loading';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { tokenClear } from '../app/reducers';
 
 const Dashboard = () => {
   const { token } = useAppSelector(state => state.auth);
-  const { data: user, isLoading } = useGetUserQuery(token);
+  const { data: user, isLoading, isError } = useGetUserQuery(token);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +21,10 @@ const Dashboard = () => {
   }, [token]);
 
   if (isLoading) return <Loading />;
+
+  if (isError) {
+    dispatch(tokenClear());
+  }
 
   return (
     <div className='bg-slate-100'>
