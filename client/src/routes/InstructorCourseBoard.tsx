@@ -3,14 +3,18 @@ import { useGetCourseByIdQuery } from '../app/services';
 import Loading from '../components/Loading';
 import { SectionResponse } from '../types/section.types';
 import { useState } from 'react';
-import { CreateSectionModal } from '../components';
+import { CreateSectionModal, UpdateSectionModal } from '../components';
 import { createPortal } from 'react-dom';
 
 type SectionRowProps = {
   section: SectionResponse;
+  courseId: number;
+  updateCourse: (close: () => void) => Promise<void>;
 };
 
-const SectionRow = ({ section }: SectionRowProps) => {
+const SectionRow = ({ section, courseId, updateCourse }: SectionRowProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
       <td className='pl-16 text-left'>{section.sequence}</td>
@@ -20,7 +24,13 @@ const SectionRow = ({ section }: SectionRowProps) => {
           Active
         </span>
       </td>
-      <td>
+      <td className='flex items-center justify-center gap-4'>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className='rounded-md border-2 border-teal-200 bg-secondary px-4 py-2 text-sm text-slate-50'
+        >
+          Edit
+        </button>
         <Link
           to={`/sections/${section.id}`}
           className='rounded-md border-2 border-pink-200 bg-primary px-4 py-2 text-sm text-slate-50'
@@ -28,6 +38,16 @@ const SectionRow = ({ section }: SectionRowProps) => {
           View
         </Link>
       </td>
+      {isModalOpen &&
+        createPortal(
+          <UpdateSectionModal
+            close={() => setIsModalOpen(false)}
+            courseId={courseId}
+            updateCourse={updateCourse}
+            section={section}
+          />,
+          document.body,
+        )}
     </>
   );
 };
@@ -43,9 +63,9 @@ const InstructorCourseBoard = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  async function updateCourse() {
+  async function updateCourse(close: () => void) {
     await refetch();
-    setIsModalOpen(false);
+    close();
   }
 
   if (isLoading) return <Loading />;
@@ -75,7 +95,11 @@ const InstructorCourseBoard = () => {
                     className='border-b-2 font-medium [&>td]:py-4'
                     key={section.id}
                   >
-                    <SectionRow section={section} />
+                    <SectionRow
+                      section={section}
+                      courseId={course!.id}
+                      updateCourse={updateCourse}
+                    />
                   </tr>
                 ))}
             </tbody>

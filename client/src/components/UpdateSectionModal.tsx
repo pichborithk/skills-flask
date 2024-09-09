@@ -1,30 +1,38 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import { IoMdExit } from 'react-icons/io';
 import { useAppSelector } from '../app/hooks';
-import { useCreateSectionMutation } from '../app/services';
+import { useUpdateSectionMutation } from '../app/services';
+import { SectionResponse } from '../types/section.types';
 
-type CreateSectionModalProps = {
+type UpdateSectionModalProps = {
   close: () => void;
   courseId: number;
   updateCourse: (close: () => void) => Promise<void>;
+  section: SectionResponse;
 };
 
-const CreateSectionModal = ({
+const UpdateSectionModal = ({
   close,
   courseId,
   updateCourse,
-}: CreateSectionModalProps) => {
+  section,
+}: UpdateSectionModalProps) => {
   const { token } = useAppSelector(state => state.auth);
   const sequenceInput = useRef<HTMLInputElement>(null);
   const titleInput = useRef<HTMLInputElement>(null);
-  const [createSection, { isLoading }] = useCreateSectionMutation();
+  const [updateSection, { isLoading }] = useUpdateSectionMutation();
+
+  useEffect(() => {
+    sequenceInput.current!.value = section.sequence.toString();
+    titleInput.current!.value = section.title;
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const sequence = sequenceInput.current!.valueAsNumber;
     const title = titleInput.current!.value;
 
-    await createSection({ token, sequence, title, courseId });
+    await updateSection({ token, id: section.id, sequence, title, courseId });
 
     sequenceInput.current!.valueAsNumber = 0;
     titleInput.current!.value = '';
@@ -45,7 +53,7 @@ const CreateSectionModal = ({
             onSubmit={handleSubmit}
             className='relative flex flex-col items-center justify-evenly gap-8 px-12 py-16 text-xl text-primary'
           >
-            <h1 className='text-4xl font-bold text-primary'>Add New Section</h1>
+            <h1 className='text-4xl font-bold text-primary'>Edit Section</h1>
             <fieldset className='flex w-full flex-col'>
               <label htmlFor='username' className='px-4 py-2'>
                 Sequence
@@ -78,7 +86,7 @@ const CreateSectionModal = ({
                 className='mb-8 w-full rounded-lg border-2 border-primary px-4 py-2 font-semibold hover:bg-primary hover:text-slate-50'
                 disabled={isLoading}
               >
-                Add
+                Update
               </button>
             </div>
           </form>
@@ -88,4 +96,4 @@ const CreateSectionModal = ({
   );
 };
 
-export default CreateSectionModal;
+export default UpdateSectionModal;

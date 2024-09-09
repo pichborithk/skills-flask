@@ -22,8 +22,22 @@ export const sectionSlice = createApi({
         body: section,
       }),
     }),
+
+    updateSection: builder.mutation<SectionResponse, Partial<SectionRequest>>({
+      query: ({ token, ...section }) => ({
+        url: `sections/${section.id}`,
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: section,
+      }),
+    }),
   }),
 });
 
-export const { useGetSectionByIdQuery, useCreateSectionMutation } =
-  sectionSlice;
+export const {
+  useGetSectionByIdQuery,
+  useCreateSectionMutation,
+  useUpdateSectionMutation,
+} = sectionSlice;
