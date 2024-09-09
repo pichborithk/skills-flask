@@ -30,4 +30,11 @@ public class LectureController {
         var user = userService.getCurrentUserDetails();
         return lectureService.update(user, lectureId, request);
     }
+
+    @DeleteMapping("{lectureId}")
+    @ResponseBody
+    public void deleteLecture(@PathVariable int lectureId) {
+        var user = userService.getCurrentUserDetails();
+        lectureService.delete(user, lectureId);
+    }
 }

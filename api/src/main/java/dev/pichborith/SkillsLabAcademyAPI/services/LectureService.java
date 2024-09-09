@@ -76,4 +76,21 @@ public class LectureService {
 
         return lectureMapper.toLectureResponse(lectureRepo.save(lecture));
     }
+
+    public void delete(UserResponse user, int lectureId) {
+        var lectureView = lectureRepo.findViewById(lectureId)
+                                     .orElseThrow(() -> new NotFoundException(
+                                         String.format(
+                                             "Lecture with ID = %d does not exist",
+                                             lectureId)));
+
+        if (user.id() != lectureView.getInstructorId()) {
+            throw new UnauthorizedException(String.format(
+                "Lecture with ID = %d does not belong to Instructor with ID = %d",
+                lectureId, user.id()));
+        }
+
+        lectureRepo.deleteById(lectureId);
+
+    }
 }
