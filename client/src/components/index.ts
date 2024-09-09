@@ -10,3 +10,4 @@ export { default as CoursesTable } from './CoursesTable';
 export { default as CreateSectionModal } from './CreateSectionModal';
 export { default as UpdateSectionModal } from './UpdateSectionModal';
 export { default as SectionRow } from './SectionRow';
+export { default as LectureRow } from './LectureRow';
