@@ -3,6 +3,7 @@ package dev.pichborith.SkillsLabAcademyAPI.repositories;
 import dev.pichborith.SkillsLabAcademyAPI.dto.SectionView;
 import dev.pichborith.SkillsLabAcademyAPI.models.Section;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
@@ -20,4 +21,25 @@ public interface SectionRepo extends JpaRepository<Section, Integer> {
         WHERE s.section_id = :sectionId
         """, nativeQuery = true)
     Optional<SectionView> findViewById(int sectionId);
+
+    // Shift sequence numbers greater than or equal to a given sequence
+    @Modifying
+    @Query("UPDATE Section s SET s.sequence = s.sequence + 1 WHERE s.sequence >= :sequence AND s.course.id = :courseId")
+    void shiftSequenceUpFrom(int courseId, int sequence);
+
+    // Shift sequence numbers after deletion
+    @Modifying
+    @Query("UPDATE Section s SET s.sequence = s.sequence - 1 WHERE s.sequence >= :sequence AND s.course.id = :courseId")
+    void shiftSequenceDownFrom(int courseId, int sequence);
+
+
+    // Shift sequences up by 1 between the new and old positions
+    @Modifying
+    @Query("UPDATE Section s SET s.sequence = s.sequence + 1 WHERE s.sequence < :currentSequence AND s.sequence >= :newSequence AND s.course.id = :courseId")
+    void shiftSequenceUpBetween(int courseId, int currentSequence, int newSequence);
+
+    // Shift sequences down by 1 between the old and new positions
+    @Modifying
+    @Query("UPDATE Section s SET s.sequence = s.sequence - 1 WHERE s.sequence > :currentSequence AND s.sequence <= :newSequence AND s.course.id = :courseId")
+    void shiftSequenceDownBetween(int courseId, int currentSequence, int newSequence);
 }
